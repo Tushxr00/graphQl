@@ -6,14 +6,18 @@ const {
     GraphQLString,
     GraphQLSchema,
     GraphQLID,
-    GraphQLInt
+    GraphQLInt,
+    GraphQLList,
 } = graphql
 
 // dummy data 
 var books = [
-    { name: 'Name of the Wind', genre: 'Fantasy', id: '1', authorId: "1" },
-    { name: 'The Final Empire', genre: 'Fantasy', id: '2', authorId: "2" },
-    { name: 'The Long Earth', genre: 'Sci-Fi', id: '3', authorId: "3" },
+    { name: 'Name of the Wind', genre: 'Fantasy', id: '1', authorId: '1' },
+    { name: 'The Final Empire', genre: 'Fantasy', id: '2', authorId: '2' },
+    { name: 'The Hero of Ages', genre: 'Fantasy', id: '4', authorId: '2' },
+    { name: 'The Long Earth', genre: 'Sci-Fi', id: '3', authorId: '3' },
+    { name: 'The Colour of Magic', genre: 'Fantasy', id: '5', authorId: '3' },
+    { name: 'The Light Fantastic', genre: 'Fantasy', id: '6', authorId: '3' },
 ];
 
 var authors = [
@@ -22,6 +26,7 @@ var authors = [
     { name: 'Terry Pratchett', age: 66, id: '3' }
 ];
 
+// the Book Object
 const BookType = new GraphQLObjectType({
     name: "Book",
     fields: () => ({
@@ -37,15 +42,23 @@ const BookType = new GraphQLObjectType({
     })
 });
 
+// the Author Object
 const AuthorType = new GraphQLObjectType({
     name: "Author",
     fields: () => ({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
-        age: { type: GraphQLInt }
+        age: { type: GraphQLInt },
+        books: {
+            type: new GraphQLList(BookType),
+            resolve(parent, args) {
+                return _.filter(books, { authorId: parent.id })
+            }
+        }
     })
 });
 
+// the RootQuery  Object
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
