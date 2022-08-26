@@ -1,15 +1,7 @@
-import { gql } from '@apollo/client'
 import { graphql } from '@apollo/client/react/hoc';
 import React from 'react'
+import { getAuthorsQuery } from '../queries/queries';
 
-const getBooksQuery = gql`
-{
-    authors{
-        name
-        id
-    }
-}
-`
 const AddBook = (props) => {
 
     const displayAuthors = () => {
@@ -45,4 +37,4 @@ const AddBook = (props) => {
     )
 }
 
-export default graphql(getBooksQuery)(AddBook)
+export default graphql(getAuthorsQuery)(AddBook)
