@@ -1,6 +1,6 @@
 import { graphql } from '@apollo/client/react/hoc';
 import React, { useState } from 'react'
-import { getAuthorsQuery, addBookMutation } from '../queries/queries';
+import { getAuthorsQuery, addBookMutation, getBooksQuery } from '../queries/queries';
 import { flowRight as compose } from 'lodash';
 
 const AddBook = (props) => {
@@ -19,17 +19,13 @@ const AddBook = (props) => {
     }
     const submitForm = (event) => {
         event.preventDefault();
-        console.log({
-            name,
-            genre,
-            authorId
-        })
         props.addBookMutation({
             variables: {
                 name: name,
                 genre: genre,
                 authorId: authorId,
-            }
+            },
+            refetchQueries: [{ query: getBooksQuery }]
         })
         setName("")
         setGenre("")
