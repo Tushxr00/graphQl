@@ -6,7 +6,7 @@ import { flowRight as compose } from 'lodash';
 const AddBook = (props) => {
     const [name, setName] = useState("")
     const [genre, setGenre] = useState("")
-    const [authorId, setAuthorId] = useState("")
+    const [authorId, setAuthorId] = useState("none")
     const displayAuthors = () => {
         const data = props.getAuthorsQuery
         if (data.loading) {
@@ -33,6 +33,7 @@ const AddBook = (props) => {
         })
         setName("")
         setGenre("")
+        setAuthorId("none")
     }
     return (
         <form id="add-book" onSubmit={submitForm}>
@@ -46,13 +47,12 @@ const AddBook = (props) => {
             </div>
             <div className="field">
                 <label>Author:</label>
-                <select onChange={(event) => setAuthorId(event.target.value)}>
-                    <option>Select author</option>
+                <select onChange={(event) => setAuthorId(event.target.value)} value={authorId}>
+                    <option value="none">Select author</option>
                     {displayAuthors()}
                 </select>
             </div>
             <button>+</button>
-
         </form>
     )
 }
