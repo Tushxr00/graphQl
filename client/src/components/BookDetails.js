@@ -12,7 +12,7 @@ const BookDetails = (props) => {
                     <h2>{book.name}</h2>
                     <p>{book.genre}</p>
                     <p>{book.author.name}</p>
-                    <p>A;; Books by this author:</p>
+                    <p> Books by this author:</p>
                     <ul className='other-books'>
                         {
                             book.author.books.map((item) => {
