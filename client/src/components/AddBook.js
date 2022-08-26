@@ -7,7 +7,6 @@ const AddBook = (props) => {
     const [name, setName] = useState("")
     const [genre, setGenre] = useState("")
     const [authorId, setAuthorId] = useState("")
-
     const displayAuthors = () => {
         const data = props.getAuthorsQuery
         if (data.loading) {
@@ -24,6 +23,13 @@ const AddBook = (props) => {
             name,
             genre,
             authorId
+        })
+        props.addBookMutation({
+            variables: {
+                name: name,
+                genre: genre,
+                authorId: authorId,
+            }
         })
         setName("")
         setGenre("")
