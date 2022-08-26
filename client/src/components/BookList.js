@@ -1,10 +1,10 @@
 import { graphql } from '@apollo/client/react/hoc';
-import React from 'react'
+import React, { useState } from 'react'
 import { getBooksQuery } from '../queries/queries';
 import BookDetails from './BookDetails';
 
 const BookList = (props) => {
-
+    const [selected, setSelected] = useState(null)
     const displayBooks = () => {
         let data = props.data
         if (data.loading) {
@@ -16,7 +16,7 @@ const BookList = (props) => {
         } else {
             return (
                 data.books.map((book) => (
-                    <li key={book.id}>
+                    <li key={book.id} onClick={(event) => { setSelected(book.id) }}>
                         {book.name}
                     </li>
                 ))
@@ -29,7 +29,7 @@ const BookList = (props) => {
             <ul id="book-list">
                 {displayBooks()}
             </ul>
-            <BookDetails />
+            <BookDetails bookId={selected} />
         </div>
     )
 }
